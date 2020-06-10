@@ -1,0 +1,19 @@
+<html>
+	<head>
+	    <meta charset='utf-8'>
+	    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	    <title>Error 404: Page not found</title>
+	    <link rel = "icon" href = "{{ url_for('static', filename='images/icon.ico') }}" type = "image/x-icon" />
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	    <meta name='viewport' content='width=device-width, initial-scale=1' />
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}" />    
+	</head>
+
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg') }});">
+    <h4>ERROR 404: Page not found. The entered URL {{ key }} does not exists <a href=" {{ url_for('index') }} ">click here</a> to make it</h4>
+</body>
+</hmtl>

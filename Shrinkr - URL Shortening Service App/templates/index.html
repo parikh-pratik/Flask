@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Url Shorten Page</title>
+    <link rel = "icon" href = "{{ url_for('static', filename='images/icon.ico') }}" type = "image/x-icon" />
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}" />    
+</head>
+
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg') }});">
+    <div class="container-fluid" style="padding: 20px;">
+      <h6><span>Shrinkr</span>Shortens your URL</h6>
+      <br />
+        <h1><a class="hname" href=" {{ url_for('index') }} ">Shorten URL</a></h1>
+        <h1><a class="hname" href=" {{ url_for('stats') }} ">View Stats</a></h1>
+        <br />
+        <br />
+         <div class="border border-light rounded shadow p-4 mb-4">
+        <div class="input-group-append">
+            <form method="POST" action=" {{ url_for('shorten') }} ">
+            {{ form.hidden_tag() }}
+                <div class="form-group" id="abc2"><span class="full_text">
+                    {{ form.url.label( class="form-control-label") }}
+                   {{ form.url(type="text",id="abc1", class="form-control form-control-lg", placeholder="Enter Url", size="150px;") }}
+                        <p style="font-size:15px;">{{ msg }}</p>
+               </span> </div>
+                <div class="form-group">
+                    {{ form.submit( class="btn btn-outline-light") }}
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    </div>   
+</body>
+</html>

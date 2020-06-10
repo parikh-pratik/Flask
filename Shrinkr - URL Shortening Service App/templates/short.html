@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible'>
+    <title>Compressor</title>
+    <link rel = "icon" href = "{{ url_for('static', filename='images/icon.ico') }}" type = "image/x-icon" />
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='css/mystyle.css') }}">
+   
+</head>
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg') }});">
+    
+    <div class="container-fluid" style="padding: 20px;">
+        <h6><span>Shrinkr</span>Shortens your URL</h6>
+        <br>
+          <h1><a class="hname" href=" {{ url_for('index') }} ">Shorten URL</a></h1>
+        <h1><a class="hname" href=" {{ url_for('stats') }} ">View Stats</a></h1>
+          <br>
+          <br>
+          <div class="border border-light rounded shadow p-4 mb-4">
+      <label for="demo">Your URL is successfully compressed!! {{ long }} became <a href="{{ url_for('visit', entered_key = short) }}">{{ short }}</a></label>
+      
+      <div class="input-group mb-3">
+          <input type="text" id="url_copy" class="form-control" value="{{ short }}" readonly="readonly">
+          <div class="input-group-append">
+            <button class="btn btn-primary" onclick="copy()" id="copy">Copy</button>
+
+          </div>
+        </div>
+      </div>
+      </div>   
+    <script>
+    function copy() {
+        var button = document.getElementById("copy");
+        button.innerHTML = "Copied";
+        button.style.backgroundColor = "green";
+        var text = document.getElementById("url_copy");
+        text.select();
+        text.setSelectionRange(0, 99999);
+        p = document.execCommand("copy");
+        
+        }
+    </script>
+</body>
+</html>

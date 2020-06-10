@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Stats</title>
+    <link rel = "icon" href = "{{ url_for('static', filename='images/icon.ico') }}" type = "image/x-icon" />
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}">
+    </head>
+
+<body style="background-image: url({{ url_for('static', filename='images/bg.jpg') }});">
+    <div class="container-fluid" style="padding: 20px;">
+        <h6><span>Shrinkr</span>Shortens your URL</h6>
+        <br>
+          <h1><a class="hname" href=" {{ url_for('index') }} ">Shorten URL</a></h1>
+        <h1><a class="hname" href=" {{ url_for('stats') }} ">View Stats</a></h1>
+          <br>
+          <br>
+          <div>Sort by hits<a class="hname" title="Increasing Order" href="{{ url_for('stats', sortby='hitsasc') }}"> &#8593;</a><a class="hname"  title="Decreasing Order" href="{{ url_for('stats', sortby='hitsdesc') }}">&#8595;</a></div>
+          <div>Sort by Date<a class="hname"  title="Oldest First" href="{{ url_for('stats', sortby='dateasc') }}"> &#8593;</a><a class="hname" title="Newest First" href="{{ url_for('stats', sortby='datedesc') }}">&#8595;</a></div>
+          <br>
+          <div class="border border-light rounded shadow p-4 mb-4" >
+              <div class="table-responsive-md">
+          <!--  <div>Sort by hits<a href="{{ url_for('stats', sortby='hitsasc') }}">&#8593;</a><a href="{{ url_for('stats', sortby='hitsdesc') }}">&#8595;</a></div>-->
+          <!--  <div>Sort by Date<a href="{{ url_for('stats', sortby='dateasc') }}">&#8593;</a><a href="{{ url_for('stats', sortby='datedesc') }}">&#8595;</a></div>-->
+              <table class="table table-borderless">
+                  <thead>
+                      <tr>
+                          <th>New URL</th>
+                          <th>Old URL</th>
+                          <th>Hits</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in stats %}
+                      <tr>
+                          <td><a class="hname" href=" {{ url_for('visit', entered_key = i[0]) }} ">{{ i[0] }}</a></td>
+                          <td>{{ i[1] }}</td>
+                          <td>{{ i[2] }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              </div>
+          </div>
+      </div>   
+</body>
+</html>

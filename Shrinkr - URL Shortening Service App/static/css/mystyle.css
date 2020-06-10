@@ -1,0 +1,46 @@
+body{
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    background-attachment: fixed;
+}
+span{
+  display: inline;
+  font-style: normal;
+  font-size: 3vw;
+}
+h1
+{
+  font-size: 3vw;
+  text-align: center;
+}
+
+a.hname
+{
+  color: white;
+  text-decoration: none;
+
+}
+
+.border
+{
+  padding: 5%;
+}
+
+.table
+{
+    color: white;
+}
+.bto
+{
+    text-align: center;
+}
+
+a#ab
+{
+    color: white;
+}
+span.bto
+{
+    text-align:center;
+}
