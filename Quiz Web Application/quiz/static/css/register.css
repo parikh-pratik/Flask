@@ -1,0 +1,67 @@
+form {
+  border: 3px solid #f1f1f1;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#message {
+  display: none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  font-size: 14px;
+}
+
+#submit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#submit:hover {
+  opacity: 0.8;
+}
+
+span.psw {
+  font-size: 14px;
+  margin: 0;
+
+}
+
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -15px;
+  content: "✔";
+}
+
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -15px;
+  content: "✖";
+}

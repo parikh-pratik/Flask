@@ -1,0 +1,62 @@
+{% extends "template.html" %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/comments.css') }}"/>
+{% endblock css %}
+{% block content %}
+  <h1> Comment your views</h1>
+  <div class="comment-container">
+    <table id="commentsTable">
+      {% for i in comments: %}
+        <tr>
+          <td rowspan="2">
+            <img class="clearfix" src="{{ url_for('static', filename = 'images/avtar.jpg') }}" style="max-width: 100%; max-height: 100%;">
+          </td>
+          <td>
+            {{ i['name'] }}
+          </td>
+        </tr>
+        <tr>
+          <td class="statement">
+            &#8220 {{ i['statement'] }} &#8221
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <form id="commentForm" method="POST" action="{{ url_for('comment') }}">
+      {{ form.hidden_tag() }}
+      {{ form.name.label(for="name") }}
+      {{ form.name(type="text", placeholder="Enter your Name", value="") }}
+      {{ form.statement.label(for="name") }}
+      {{ form.statement(type="text", placeholder="Enter your Comments", value="") }}
+      {{ form.submit(class="form_element") }}
+    </form>
+  </div>
+{% endblock content %}
+{% block bodybottom %}
+  <script>
+  $("#commentForm").submit(function(event){
+    event.preventDefault();
+    var post_url = $(this).attr("action");
+    var request_method = $(this).attr("method");
+    var form_data = new FormData(this);
+    $.ajax({
+      url : post_url,
+      type: request_method,
+      data : form_data,
+      contentType: false,
+      cache: false,
+      processData:false
+      }).done(function(response){
+        console.log(response);
+        $('#commentsTable').append("<tr>" + 
+          "<td rowspan=\"2\">" + "<img class=\"clearfix\" src=\"{{ url_for('static', filename = 'images/avtar.jpg') }}\" style=\"max-width: 100%; max-height: 100%;\">" + "</td>" + 
+          "<td>" + response.name + "</td>" + 
+          "</tr>" + 
+          "<tr>" + 
+          "<td class=\"statement\">&#8220 " + response.statement + " &#8221" + 
+          "</td>" + "</tr>");
+        $('input[type="text"]').val('');
+      });
+    });
+  </script>
+{% endblock bodybottom %}

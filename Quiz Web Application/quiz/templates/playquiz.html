@@ -1,0 +1,120 @@
+{% extends "template.html" %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/playquiz.css') }}"/>
+{% endblock css %}
+{% block content %}
+  <h1> This is Quiz Time</h1>
+  {% if(preform) %}
+    <div id="prequiz">
+      <form method="GET" action="{{ url_for('quiz') }}" id='prequizForm'>
+        {{ preform.hidden_tag() }}
+        {{preform.category.label}}
+        {{preform.category}}
+        {{preform.number_of_questions.label}}
+        {{preform.number_of_questions}}
+        {{preform.submit}}
+      </form>
+    </div>
+  {% endif %}
+  {% if(form) %}
+    <div id="quiz">
+      <form method="POST" action="{{ url_for('return_results') }}" id="quizForm">
+        {{ form.hidden_tag() }}
+        <div id="results"></div>
+        <ol id="quizList">
+          {% for i in quiz: %}
+            {% set outer_loop = loop %}
+            <li>
+              <div class="one-question">
+                <input type="text" name="q_{{loop.index}}" class="question" value="{{ i['question'] }}" disabled>
+                <div>
+                  <ol class="options">
+                    <li>
+                      <input type="radio" id="q_{{ outer_loop.index }}o_1" value="{{ i['option1'] }}" name="{{ i['id'] }}">
+                      <label for="q_{{ outer_loop.index }}o_1">{{ i['option1'] }}</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="q_{{ outer_loop.index }}o_2" value="{{ i['option2'] }}" name="{{ i['id'] }}">
+                      <label for="q_{{ outer_loop.index }}o_2">{{ i['option2'] }}</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="q_{{ outer_loop.index }}o_3" value="{{ i['option3'] }}" name="{{ i['id'] }}">
+                      <label for="q_{{ outer_loop.index }}o_3">{{ i['option3'] }}</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="q_{{ outer_loop.index }}o_4" value="{{ i['answer'] }}" name="{{ i['id'] }}">
+                      <label for="q_{{ outer_loop.index }}o_4">{{ i['answer'] }}</label>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        </ol>
+        {{form.submit}}
+      </form>
+    </div>
+  {% endif %}
+  <script>
+    $(document).ready(function() {
+      $("input[type=radio]").click(function() {
+        var previousValue = $(this).data('storedValue');
+        if (previousValue) {
+          $(this).prop('checked', !previousValue);
+          $(this).data('storedValue', !previousValue);
+        } else {
+          $(this).data('storedValue', true);
+          $("input[type=radio]:not(:checked)").data("storedValue", false);
+        }
+      });
+    });
+  </script>
+  <script>
+    var ols = document.getElementsByClassName("options");
+    for (var i = 0; i < ols.length; i++) {
+      for(var j = ols[i].children.length; j >=0; j--) {
+        ols[i].appendChild(ols[i].children[Math.random() * j | 0]);
+      }
+    }    
+  </script>
+  <script>
+    var total_questions = document.getElementsByClassName('one-question').length;
+    $("#quizForm").submit(function(event) {
+      event.preventDefault(); //prevent default action 
+      var post_url = $(this).attr("action"); //get form action url
+      var request_method = $(this).attr("method"); //get form GET/POST method
+      var form_data = new FormData(this); //Creates new FormData object
+      $.ajax({
+        url : post_url,
+        type: request_method,
+        data : form_data,
+        contentType: false,
+        cache: false,
+        processData:false
+      }).done(function(response) {
+        console.log(response);
+        var ajaxResult = [];
+        ajaxResult.push(response);
+        $("#submit").css("display","none");
+        $('.options').each(function() {
+          $("input[type=radio]").each(function() {
+            if(this.checked){
+              if(this.value == response.qna[this.name]) {
+                $(this).next().addClass("rightAnswer");
+              } else {
+                $(this).next().addClass("wrongAnswer");
+              }
+            } else {
+              if(this.value == response.qna[this.name]) {
+                $(this).next().addClass("wouldBeRightAnswer");
+              }
+            }
+            $(this).attr('disabled',true);
+          });
+        });
+        $("#results").css("display", "block");
+        $("#results").html("You scored " + response.score + "%." +  "You answered " + response.correct_questions + " questions correctly, " + response.wrong_questions + " questions incorrectly and left " + (total_questions - response.wrong_questions - response.correct_questions) + " questioned unanswered.");
+      });
+    });
+  </script>
+{% endblock content %}

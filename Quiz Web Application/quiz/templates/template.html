@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/template.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {% block css %}{% endblock css %}
+    {% if title %}
+      <title>Quizzr - {{ title | replace("-", " ")}}</title>
+    {% else %}
+      <title>Quizzr</title>
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+      window.onload = function(){
+        var element = document.getElementById("{{ title }}");
+        element.className += "active";
+      };
+    </script>
+    <style>
+      @media screen and (max-width: 690px) {
+        #sandwich {
+          float: left;
+          display: block;
+        }
+        #Home, #Comments, #Leaderboard, #Login, #Register, #Logout, #Account, #Play-Quiz {
+          display: none;
+        }
+        #{{ title }} {
+          display: block;
+          float: left!important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!--Sidebar-->
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="sidenav-close" onclick="closeNav()">&times;</a>
+      <a href="{{ url_for('home') }}">Quizzr</a>
+      <a href="{{ url_for('playquiz') }}">Play Quiz</a>
+      <a href="{{ url_for('comments') }}">Comments</a>
+      <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+      {% if(current_user.is_authenticated) %}
+        <a href="{{ url_for('account') }}">Account</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('login') }}">Login</a>
+      {% endif %}
+      <span>
+        <a href="https://www.linkedin.com/in/parikh-pratik/"><i class="fa fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/pratik-parikh"><i class="fa fa-github"></i> Github</a>
+      </span>
+    </div>
+    <!--Menubar-->
+    <ul class="topnav">
+      <li><a id="sandwich" onclick="openNav()"><i class="fa fa-bars"></i></a></li>
+      <li><a id="Home" href="{{ url_for('home') }}">Quizzr</a></li>
+      <li><a id="Play-Quiz" href="{{ url_for('playquiz') }}">Play Quiz</a></li>
+      <li><a id="Comments" href="{{ url_for('comments') }}">Comments</a></li>
+      <li><a id="Leaderboard" href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+      {% if(current_user.is_authenticated) %}
+        <li class="right"><a id="Logout" href="{{ url_for('logout') }}">Logout</a></li>
+        <li class="right"><a id="Account" href="{{ url_for('account') }}">Account</a></li>
+      {% else %}
+        <li class="right"><a id="Register" href="{{ url_for('register') }}">Register</a></li>
+        <li class="right"><a id="Login" href="{{ url_for('login') }}">Login</a></li>
+      {% endif %}
+      <li class="right"><a id="Github" href="https://github.com/pratik-parikh"><i class="fa fa-github"></i></a></li>
+      <li class="right"><a id="Linkedin" href="https://www.linkedin.com/in/parikh-pratik/"><i class="fa fa-linkedin"></i></a></li>
+    </ul>
+    <div class="container" onclick="closeNav()">
+      {% block content %}{% endblock content %}
+    </div>
+    <script>
+      var open = false
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        open = true;
+      }
+      function closeNav() {
+        if(open) {
+          document.getElementById("mySidenav").style.width = "0";
+          open = false;
+        }
+      }
+    </script>
+    {% block bodybottom %}{% endblock bodybottom %}
+  </body>
+</html>

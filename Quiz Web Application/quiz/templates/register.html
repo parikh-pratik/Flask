@@ -1,0 +1,161 @@
+{% extends "template.html" %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/register.css') }}"/>
+{% endblock css %}
+{% block content %}
+  <h1>Register Here</h1>
+  <form action="{{ url_for('register') }}" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name.label(for="Name") }}
+    {{ form.name(type="text", placeholder="Enter Your Name", pattern="[a-zA-Z ]{2,40}$", title="Must be only letters between length 2 and 40.") }}
+    {{ form.username.label(for="username") }}
+    {{ form.username(type="text", placeholder="Enter Username", pattern="[0-9a-zA-Z]{2,20}$", title="Must contain alphnumeric characters and underscore only. Length must be between 2 and 20 characters.") }}
+    <div>
+      <span id="username_response" ></span>
+    </div>
+    {{ form.email.label(for="email") }}
+    {{ form.email(type="text", placeholder="Enter E-mail", title="Must be a valid email.") }}
+    <div>
+      <span id="email_response" ></span>
+    </div>
+    {{ form.password.label(for="password") }}
+    {{ form.password(type="password", placeholder="Enter Password", pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}", title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters.") }}
+    <div id="message">
+      <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+      <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+      <p id="number" class="invalid">A <b>number</b></p>
+      <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    </div>
+    {{ form.confirm_password.label(for="confirm_password") }}
+    {{ form.confirm_password(type="password", placeholder="Re-Enter Password", title="Re-enter Password") }}
+    {{ form.submit() }}
+    <span class="psw">Already have an account? Login <a href="{{ url_for('login') }}">here</a></span>
+  </form>
+{% endblock content %}
+{% block bodybottom %}
+  <script>
+    window.onload = function () {
+      var txtPassword = document.getElementById("password");
+      var txtConfirmPassword = document.getElementById("confirm_password");
+      txtPassword.onchange = ConfirmPassword;
+      txtConfirmPassword.onkeyup = ConfirmPassword;
+      function ConfirmPassword() {
+        txtConfirmPassword.setCustomValidity("");
+        if (txtPassword.value != txtConfirmPassword.value) {
+          txtConfirmPassword.setCustomValidity("Passwords do not match.");
+        }
+      }
+    }
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+    myInput.onfocus = function() {
+      document.getElementById("message").style.display = "block";
+    }
+    myInput.onblur = function() {
+      document.getElementById("message").style.display = "none";
+    }
+    myInput.onkeyup = function() {
+      var lowerCaseLetters = /[a-z]/g;
+      if(myInput.value.match(lowerCaseLetters)) {  
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+      }
+      var upperCaseLetters = /[A-Z]/g;
+      if(myInput.value.match(upperCaseLetters)) {  
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+      var numbers = /[0-9]/g;
+      if(myInput.value.match(numbers)) {  
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+      if(myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+    }
+  </script>
+  <script>
+    var email_availability = false;
+    var username_availability = false;
+    $(document).ready(function(){
+      $("#username").keyup(function(){
+        var username = $(this).val().trim();
+        if(username != ''){
+          $.ajax({
+            url: "{{ url_for('check_username_availability') }}",
+            type: 'post',
+            data: {'username': username},
+            success: function(response){
+              if(response == "available"){
+                username_availability = true;
+                $('#username_response').html("This username is available");
+                $('#username_response').css("color", "green");
+                if(email_availability == true){
+                  $("#submit").show();
+                }
+              } else{
+                username_availability = false;
+                $('#username_response').html("This username is not available. Try something else.");
+                $('#username_response').css("color", "red");
+                $("#submit").hide();
+              }
+            }
+          });
+        } else {
+          $("#username_response").html("");
+        }
+      });
+    });
+    $(document).ready(function(){
+      $("#email").keyup(function(){
+        var email = $(this).val().trim();
+        if(email != ''){
+          $.ajax({
+            url: "{{ url_for('check_email_availability') }}",
+            type: 'post',
+            data: {'email': email},
+            success: function(response){
+              if(response == "available"){
+                email_availability = true;
+                $("#email_response").html("");
+                if(username_availability == true){
+                  $("#submit").show();
+                }
+              } else if(response == "not available"){
+                email_availability = false;
+                $('#email_response').html("This email is already associated with an account. Try using a different email.");
+                $('#email_response').css("color", "red");
+                $("#submit").hide();
+              } else if(response == "not an email") {
+                email_availability = false;
+                $('#email_response').html("Please enter a valid email.");
+                $('#email_response').css("color", "red");
+                $("#submit").hide();
+              }
+            }
+          });
+        } else {
+          $("#email_response").html("");
+          $("#submit").show();
+        }
+      });
+    });
+  </script>
+{% endblock bodybottom %}

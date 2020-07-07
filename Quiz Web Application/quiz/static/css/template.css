@@ -1,0 +1,110 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  z-index: 2;
+}
+
+ul.topnav li {
+  float: left;
+}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+ul.topnav li a:hover:not(.active) {
+  background-color: #111;
+}
+
+ul.topnav li a:hover {
+  cursor: pointer;
+}
+
+ul.topnav li a.active {
+  background-color: #4CAF50;
+}
+
+ul.topnav li.right {
+  float: right;
+}
+
+#sandwich {
+  display: none;
+}
+
+#Login, #Account {
+  border-right: 1px solid #bbb;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  margin-top: 0;
+}
+
+.sidenav a {
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover:not(.sidenav-close) {
+  color: #f1f1f1;
+  background-color: #818181;
+}
+
+a.sidenav-close:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .sidenav-close {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  float: right;
+  padding: 0;
+}
+
+.sidenav-close {
+  margin-top: 12px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.container:after, .container:before{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.container{
+  padding: 16px;
+}

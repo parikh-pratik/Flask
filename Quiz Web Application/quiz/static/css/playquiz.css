@@ -1,0 +1,146 @@
+form {
+  border: 3px solid #f1f1f1;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#submit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+}
+
+#submit:hover {
+  opacity: 0.8;
+}
+
+.options li {
+  list-style-type: lower-latin!important;
+  margin:0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+#quizlist {
+  margin:0;
+  padding: 0;
+}
+
+input[type=text] {
+  display:inline-block;
+  margin-bottom:10px;
+  border: none;
+  width:100%;
+  font-size: 1em;
+  color: #000;
+}
+
+#results {
+  padding: 14px 20px;
+  margin: 8px 0;
+  display: none;
+  border: 1px solid #ccc!important;
+  color: #000!important;
+  background-color: #f1f1f1!important;
+  border-radius: 8px;
+}
+
+.options li input[type=radio] {
+  display: none; 
+}
+
+.options {
+  margin: 0;
+  padding: 16px;
+}
+
+input[type=radio] + label {
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+input[type=radio] + label:hover {
+  border: 1px solid #000000;
+}
+
+input[type=radio]:checked + label {
+  background-image: none;
+  background-color: #0033FF;
+  color: white;
+  border: 1px solid #0033FF;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+label.wrongAnswer {
+  background-color: red!important;
+  color: #fff!important;
+  border: 1px solid red !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+label.wrongAnswer:after {
+  float: right;
+  position: relative;
+  content: "✖";
+}
+
+label.rightAnswer {
+  background-color: green!important;
+  color: #fff!important;
+  border: 1px solid green !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+label.rightAnswer:after {
+  position: relative;
+  float: right;
+  content: "✔";
+}
+
+label.wouldBeRightAnswer {
+  border:2px solid #000 !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+label.wouldBeRightAnswer:after {
+  position: relative;
+  float: right;
+  content: "✔";
+}

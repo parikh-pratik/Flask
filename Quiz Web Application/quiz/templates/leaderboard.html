@@ -1,0 +1,108 @@
+{% extends "template.html" %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/leaderboard.css') }}"/>
+{% endblock css %}
+{% block content %}
+  <h1> Leaderboard</h1>
+  <div class="filter">
+    <input type="text" placeholder="Type to search.." id="filter">
+  </div>
+  <div class="table-container">
+    <table id="leaderboardTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Category <i class="fa fa-sort"></th>
+          <th onclick="sortTable(1)">Name <i class="fa fa-sort"></th>
+          <th onclick="sortTable(2)">Score <i class="fa fa-sort"></th>
+          <th onclick="sortTable(4)">Date <i class="fa fa-sort"></th>
+          <th style="display: none;">Id</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardTableBody">
+        {% for item in leaderboard: %}
+          <tr>
+            <td>{{ item['Category'] }}</td>
+            <td>{{ item['Player'] }}</td>
+            <td>{{ item['Score'] }} %</td>
+            <td>{{ item['Timestamp'] }}</td>
+            <td style="display: none;">{{ item['ID'] }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>  
+    </table>
+  </div>
+  <div>
+    <br>
+    {% if(current_user.is_authenticated): %}
+      Try out all the categories!
+    {% else: %}
+      Want to see yourself here? <a href="{{ url_for('register') }}">Create an account</a> and play now!
+    {% endif %}
+  </div>
+  <script>
+    table = document.getElementById("leaderboardTable");
+    rows = table.rows;
+    for (i = 1; i < rows.length; i++) {
+      x = rows[i].getElementsByTagName("TD")[3];
+      jsDate = new Date(x.innerHTML);
+      x.innerHTML = jsDate.toDateString() + " " + jsDate.toLocaleTimeString();
+    }
+  </script>
+  <script>
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("leaderboardTable");
+      switching = true;
+      dir = "asc"; 
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (dir == "asc") {
+            if(n == 4) {
+              if(Number(x.innerHTML) > Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch= true;
+                break;
+            }
+          } else if (dir == "desc") {
+            if(n == 4) {
+              if(Number(x.innerHTML) < Number(y.innerHTML)) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount ++;      
+        } else {
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+    $(document).ready(function(){
+      $("#filter").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#leaderboardTableBody tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+
+  </script>
+{% endblock content %}

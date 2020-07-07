@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/login.css') }}"/>
+{% endblock css %}
+{% block content %}
+  <h1>Login Here</h1>
+  <form action="{{ url_for('login') }}" method="POST">
+    {{ form.hidden_tag() }}
+    {% if(unsuccessful == True) %}
+      <div class="note note-warning">
+        <span class="note-close-button" onclick="this.parentElement.style.display='none';">&times;</span> 
+        Incorrect Username and/or Password. Please try again!
+      </div>
+    {% endif %}
+    {{ form.username.label(for="username") }}
+    {{ form.username(type="text", placeholder="Enter Username") }}
+    {{ form.password.label(for="password") }}
+    {{ form.password(type="password", placeholder="Enter Password") }}
+    {{ form.submit() }}
+    {{ form.remember(type="checkbox") }}
+    {{ form.remember.label(type="text", placeholder="Remember Me", id="rememberme") }}
+    <div class="signup">
+      Don't have an account? Sign up <a href="{{ url_for('register') }}">here</a>
+    </div>
+    <div class="note">
+      <strong>Note:</strong> If you don't have an account, you can use <code class="dark"> Username: test1</code> and <code class="dark"> Password: test</code>, <code class="dark"> Username: test2</code> and <code class="dark"> Password: test</code>, <code class="dark"> Username: test3</code>, and <code class="dark"> Password: test</code> and so on upto <code class="dark"> Username: test10</code> and <code class="dark"> Password: test</code> to login. But if someone else is also using it to play a Quiz, your submission may not be shown.
+    </div>
+  </form>
+{% endblock content %}

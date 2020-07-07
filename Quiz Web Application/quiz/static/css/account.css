@@ -1,0 +1,49 @@
+.table-container {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #333;
+  color: white;
+}
+
+#leaderboardTable th {
+  cursor: pointer;
+}
+
+#leaderboardTable th:hover {
+  background-color: #111;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.filter {
+  padding-left: 16px;
+}
+
+.filter input[type=text] {
+  font-size: 17px;
+  border: none;
+  background-image: url('../images/searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  margin-bottom: 10px;
+}

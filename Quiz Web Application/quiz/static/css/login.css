@@ -1,0 +1,76 @@
+form {
+  border: 3px solid #f1f1f1;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.note-close-button {
+  margin-left: 15px;
+  color: red;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.note-close-button:hover {
+  color: black;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#submit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  display: inline-block;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+#submit:hover {
+  opacity: 0.8;
+}
+
+div.signup {
+  float: right;
+}
+
+#rememberme {
+  padding-top: 16px;
+}
+
+.note {
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  height: auto;
+  border: 1px solid #ccc;
+  color: #000!important;
+  background-color: #f1f1f1!important;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing : border-box;
+}
+
+.note-warning {
+  border: 2px solid red!important;
+  color: red!important;
+}
+
+code.dark {
+  background-color: rgba(0,0,0,0.1);
+  font-style: italic;
+  font-size: 16px;
+}
