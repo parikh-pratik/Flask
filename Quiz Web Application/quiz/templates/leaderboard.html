@@ -44,7 +44,8 @@
     rows = table.rows;
     for (i = 1; i < rows.length; i++) {
       x = rows[i].getElementsByTagName("TD")[3];
-      jsDate = new Date(x.innerHTML);
+      dateArguments = x.innerHTML.split(",");
+      jsDate = new Date(Date.UTC(dateArguments[0], dateArguments[1]-1, dateArguments[2], dateArguments[3], dateArguments[4], dateArguments[5]));
       x.innerHTML = jsDate.toDateString() + " " + jsDate.toLocaleTimeString();
     }
   </script>
@@ -62,7 +63,12 @@
           x = rows[i].getElementsByTagName("TD")[n];
           y = rows[i + 1].getElementsByTagName("TD")[n];
           if (dir == "asc") {
-            if(n == 4) {
+            if(n == 2) {
+              if(Number(x.innerHTML.split(" ")[0]) > Number(y.innerHTML.split(" ")[0])) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if(n == 4) {
               if(Number(x.innerHTML) > Number(y.innerHTML)) {
                 shouldSwitch = true;
                 break;
@@ -72,7 +78,12 @@
                 break;
             }
           } else if (dir == "desc") {
-            if(n == 4) {
+            if(n == 2) {
+              if(Number(x.innerHTML.split(" ")[0]) < Number(y.innerHTML.split(" ")[0])) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if(n == 4) {
               if(Number(x.innerHTML) < Number(y.innerHTML)) {
                 shouldSwitch = true;
                 break;
