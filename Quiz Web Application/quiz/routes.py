@@ -23,7 +23,7 @@ def leaderboard():
         new_result = {'Player': result.json()['user'].name or 'Unknown',
         'Category': result.json()['category'],
         'Score': result.json()['score'],
-        'Timestamp': result.json()['timestamp'].strftime("%d %b, %Y %I:%M %p"),
+        'Timestamp': result.json()['timestamp'].strftime("%Y, %m, %d, %H, %M, %S"),
         'ID': result.resultid
         }
         scores.append(new_result)
